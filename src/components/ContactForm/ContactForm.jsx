@@ -4,7 +4,8 @@ import { useId } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { addContact, selectContacts } from "../../redux/contactsSlice";
+import { selectContacts } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
  import { toast } from 'react-toastify';
 const contactSchema = Yup.object().shape({
         name: Yup.string().min(3, "Too Short!").max(50, "Too Long!").required("Required"),
@@ -27,7 +28,7 @@ export const ContactForm = () => {
             
             
         }
-        dispatch(addContact(values));
+      dispatch(addContact(values));
        actions.resetForm()
         
        
@@ -43,7 +44,7 @@ export const ContactForm = () => {
                 <Field type="text" name='name' id={nameField} className={css.input} ></Field>
                 <ErrorMessage name="name" as="span" /> 
                 <label htmlFor={numberField} className={css.label}>Number</label>
-                <Field type="text" name='number' id={numberField} className={css.input}></Field>
+                <Field type="text" name='number' pattern="\d{3}-\d{3}-\d{4}" placeholder="xxx-xxx-xxxx" id={numberField} className={css.input}></Field>
                 <ErrorMessage name="number" as="span" /> 
                 <button type="submit">Add contact</button>
     </Form>       
